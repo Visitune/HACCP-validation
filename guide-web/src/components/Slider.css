@@ -1,0 +1,29 @@
+.demo-slider {
+  display: block;
+  margin-bottom: 0.9rem;
+}
+
+.demo-slider-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+  font-family: var(--font-sans);
+}
+
+.demo-slider-label {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.demo-slider-value {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+}
+
+.demo-slider input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-accent);
+}

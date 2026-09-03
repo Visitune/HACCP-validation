@@ -1,0 +1,35 @@
+.toc {
+  margin: 1.75rem 0 2.5rem;
+  padding: 1.1rem 1.4rem;
+  background: var(--color-sidebar-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.toc-title {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-faint);
+  margin-bottom: 0.6rem;
+}
+
+.toc ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+}
+
+.toc a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.toc a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}

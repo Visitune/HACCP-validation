@@ -1,0 +1,61 @@
+.matrix-wrap {
+  margin: 1.75rem 0;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  font-family: var(--font-sans);
+  min-width: 620px;
+}
+
+.matrix thead th {
+  text-align: left;
+  padding: 0.7rem 1rem;
+  background: var(--color-sidebar-bg);
+  color: var(--color-text-faint);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.matrix tbody th,
+.matrix tbody td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+.matrix tbody tr:last-child th,
+.matrix tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.matrix tbody th {
+  font-weight: 600;
+  color: var(--color-heading);
+  white-space: nowrap;
+}
+
+.matrix-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}

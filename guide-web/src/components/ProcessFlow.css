@@ -1,0 +1,106 @@
+.process-flow {
+  list-style: none;
+  margin: 1.75rem 0;
+  padding: 1.5rem 1.5rem 1.5rem 0;
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.process-step {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding: 0 1.5rem 0 1.75rem;
+}
+
+.process-step:not(:last-child) {
+  padding-bottom: 1.35rem;
+}
+
+.process-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: calc(1.75rem + 13px);
+  top: 30px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--color-border);
+}
+
+.process-step-marker {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.8rem;
+  z-index: 1;
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.process-step-body {
+  padding-top: 0.15rem;
+  transition: opacity 0.25s ease;
+}
+
+.process-step-title {
+  font-weight: 600;
+  color: var(--color-heading);
+  font-size: 0.98rem;
+  transition: color 0.25s ease;
+}
+
+.process-step-detail {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.process-flow--playing .process-step-body {
+  opacity: 0.4;
+}
+
+.process-flow--playing .process-step-marker {
+  background: var(--color-border);
+  color: var(--color-text-faint);
+}
+
+.process-flow--playing .process-step.is-past .process-step-marker {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+
+.process-flow--playing .process-step.is-past .process-step-body {
+  opacity: 0.75;
+}
+
+.process-flow--playing .process-step.is-active .process-step-body {
+  opacity: 1;
+}
+
+.process-flow--playing .process-step.is-active .process-step-marker {
+  background: var(--color-accent);
+  color: #fff;
+  transform: scale(1.18);
+  box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+
+.process-flow--playing .process-step.is-active .process-step-title {
+  color: var(--color-accent-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-step-marker,
+  .process-step-body,
+  .process-step-title {
+    transition: none;
+  }
+}

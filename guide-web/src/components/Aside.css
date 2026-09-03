@@ -1,0 +1,20 @@
+.aside {
+  margin: 1.1rem 0;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.aside-info {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+
+.aside-warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+  font-style: normal;
+  font-weight: 500;
+}

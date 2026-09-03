@@ -1,0 +1,40 @@
+.scenario-card {
+  margin: 1.5rem 0;
+  padding: 1.1rem 1.35rem;
+  background: var(--color-scenario-soft);
+  border: 1px solid #e6cfa8;
+  border-left: 4px solid var(--color-scenario);
+  border-radius: 0 10px 10px 0;
+}
+
+.scenario-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.scenario-card-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-scenario);
+}
+
+.scenario-card-badge {
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-scenario);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border: 1px solid #e6cfa8;
+}
+
+.scenario-card p {
+  margin: 0;
+  line-height: 1.65;
+}
