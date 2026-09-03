@@ -1,0 +1,6 @@
+{
+  "installCommand": "npm install --prefix guide-web",
+  "buildCommand": "npm run build --prefix guide-web",
+  "outputDirectory": "guide-web/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
