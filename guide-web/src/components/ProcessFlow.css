@@ -1,27 +1,27 @@
 .process-flow {
   list-style: none;
-  margin: 1.75rem 0;
-  padding: 1.5rem 1.5rem 1.5rem 0;
+  margin: var(--space-7) 0;
+  padding: var(--space-6) var(--space-6) var(--space-6) 0;
   background: var(--color-paper);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
 }
 
 .process-step {
   position: relative;
   display: flex;
-  gap: 1rem;
-  padding: 0 1.5rem 0 1.75rem;
+  gap: var(--space-4);
+  padding: 0 var(--space-6) 0 var(--space-7);
 }
 
 .process-step:not(:last-child) {
-  padding-bottom: 1.35rem;
+  padding-bottom: var(--space-5);
 }
 
 .process-step:not(:last-child)::before {
   content: "";
   position: absolute;
-  left: calc(1.75rem + 13px);
+  left: calc(var(--space-7) + 13px);
   top: 30px;
   bottom: -4px;
   width: 2px;
@@ -32,34 +32,34 @@
   flex-shrink: 0;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  background: var(--color-accent-fill);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 0.8rem;
-  z-index: 1;
-  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+  font-size: var(--text-sm);
+  z-index: var(--z-base);
+  transition: transform var(--transition-base), background-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .process-step-body {
   padding-top: 0.15rem;
-  transition: opacity 0.25s ease;
+  transition: opacity var(--transition-base);
 }
 
 .process-step-title {
   font-weight: 600;
   color: var(--color-heading);
-  font-size: 0.98rem;
-  transition: color 0.25s ease;
+  font-size: var(--text-md);
+  transition: color var(--transition-base);
 }
 
 .process-step-detail {
   margin-top: 0.15rem;
-  font-size: 0.85rem;
+  font-size: var(--text-base);
   color: var(--color-text-muted);
   line-height: 1.5;
 }
@@ -87,10 +87,10 @@
 }
 
 .process-flow--playing .process-step.is-active .process-step-marker {
-  background: var(--color-accent);
+  background: var(--color-accent-fill);
   color: #fff;
   transform: scale(1.18);
-  box-shadow: 0 0 0 4px var(--color-accent-soft);
+  box-shadow: var(--shadow-ring);
 }
 
 .process-flow--playing .process-step.is-active .process-step-title {

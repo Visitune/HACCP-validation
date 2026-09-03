@@ -82,6 +82,12 @@ def temps_equivalent(D_ref: float, z_value: float,
     # Temps nécessaire pour atteindre le nombre de réductions visé
     return D_cible * reductions_log
 
+# LIMITE : ce calcul suppose un traitement ISOTHERME (température
+# constante pendant toute la durée). Il ignore les phases de montée et
+# de descente en température — un barème réel s'évalue avec un calcul
+# de valeur F0 intégrée sur la courbe de pénétration de chaleur réelle,
+# pas avec ce seul modèle.
+#
 # Exemple d'appel — D_ref, z_value et reductions_log doivent provenir
 # d'une source documentée par l'utilisateur, jamais d'une estimation
 # du modèle de langage.
@@ -97,64 +103,79 @@ const growthModelSnippet = `
 # pathogènes pour évaluer l'impact de changements du pH et de
 # l'activité de l'eau sur la maîtrise de la croissance du pathogène"
 #
-# ATTENTION : les paramètres cardinaux (pH_min, pH_opt, aw_min) sont
-# des constantes EMPIRIQUES propres à un couple pathogène/matrice.
+# Forme cardinale bornée (cf. Rosso, Zwietering) : chaque terme (pH, aw)
+# est clampé à [0, 1] SÉPARÉMENT avant d'être multiplié — sans quoi un
+# terme > 1 peut compenser artificiellement un terme faible.
+#
+# ATTENTION : les paramètres cardinaux (pH_min, pH_opt, pH_max, aw_min)
+# sont des constantes EMPIRIQUES propres à un couple pathogène/matrice.
 # Elles doivent provenir d'un modèle publié et validé, jamais d'une
 # estimation du LLM.
 
+def gamma_pH(pH: float, pH_min: float, pH_opt: float, pH_max: float) -> float:
+    if pH <= pH_min or pH >= pH_max:
+        return 0.0
+    num = (pH - pH_min) * (pH_max - pH)
+    den = (pH_opt - pH_min) * (pH_max - pH_opt)
+    return max(0.0, min(1.0, num / den))
+
+def gamma_aw(aw: float, aw_min: float) -> float:
+    if aw <= aw_min:
+        return 0.0
+    return max(0.0, min(1.0, (aw - aw_min) / (1.0 - aw_min)))
+
 def facteur_croissance_relatif(pH: float, pH_min: float, pH_opt: float,
-                                aw: float, aw_min: float) -> float:
+                                pH_max: float, aw: float, aw_min: float) -> float:
     """
     Renvoie un facteur entre 0 (pas de croissance) et 1 (croissance
-    optimale), combinant l'effet du pH et de l'activité de l'eau sur
-    le taux de croissance d'un pathogène (forme "cardinale" simplifiée).
+    optimale), combinant l'effet du pH (courbe en cloche bornée par
+    pH_min et pH_max) et de l'activité de l'eau.
     """
-    if pH <= pH_min or aw <= aw_min:
-        return 0.0
+    return gamma_pH(pH, pH_min, pH_opt, pH_max) * gamma_aw(aw, aw_min)
 
-    effet_pH = (pH - pH_min) / (pH_opt - pH_min)
-    effet_aw = (aw - aw_min) / (1.0 - aw_min)
-
-    return max(0.0, min(1.0, effet_pH * effet_aw))
-
-# Exemple d'appel — pH_min, pH_opt, aw_min doivent venir d'un modèle
-# publié et validé pour le pathogène et la matrice réels, jamais du LLM.
+# LIMITE : ce modèle ne couvre que l'effet pH/aw. Il ignore température,
+# atmosphère, interactions entre facteurs — un modèle publié complet
+# (ex. Baranyi, Gompertz) est nécessaire pour une validation réelle.
+#
+# Exemple d'appel — pH_min, pH_opt, pH_max, aw_min doivent venir d'un
+# modèle publié et validé pour le pathogène et la matrice réels, jamais
+# du LLM.
 # facteur = facteur_croissance_relatif(pH=..., pH_min=..., pH_opt=...,
-#                                       aw=..., aw_min=...)
+#                                       pH_max=..., aw=..., aw_min=...)
 `;
 
 const riskModelSnippet = `
-# Modèle basé sur les risques — impact cumulé d'une combinaison de
-# mesures de maîtrise le long de la chaîne alimentaire
-# Codex CAC/GL 69-2008, Section VI : "modèles basés sur les risques...
-# qui examinent l'impact d'une mesure de maîtrise ou d'une combinaison
-# de mesures de maîtrise tout au long de la chaîne alimentaire"
+# Propagation d'exposition le long de la chaîne — la brique d'ENTRÉE d'un
+# modèle basé sur les risques (Codex CAC/GL 69-2008, Section VI), pas un
+# modèle de risque complet : il manque la relation dose-réponse qui
+# transformerait ce niveau d'exposition en probabilité de maladie.
 #
-# ATTENTION : chaque taux de survie par étape est une donnée EMPIRIQUE
-# (essai, littérature, retour terrain) apportée par l'utilisateur —
-# jamais une estimation du LLM.
+# ATTENTION : chaque facteur d'évolution par étape est une donnée
+# EMPIRIQUE (essai, littérature, retour terrain) apportée par
+# l'utilisateur — jamais une estimation du LLM.
 
-def niveau_danger_final(niveau_initial: float,
-                         taux_survie_par_etape: list[float]) -> float:
+def niveau_expose_final(niveau_initial: float,
+                         facteur_par_etape: list[float]) -> float:
     """
-    Propage un niveau de danger (ex. cfu/g, ou probabilité) à travers
-    une succession d'étapes de la chaîne, chacune caractérisée par un
-    taux de survie (0 = élimination totale, 1 = aucun effet).
+    Propage un niveau de danger (ex. cfu/g) à travers une succession
+    d'étapes de la chaîne, chacune caractérisée par un facteur
+    d'évolution : < 1 = réduction (cuisson, désinfection), > 1 =
+    croissance (rupture de chaîne du froid), = 1 = aucun effet.
 
-    niveau_initial        : niveau de danger en entrée de chaîne
-    taux_survie_par_etape : un taux de survie par mesure de maîtrise,
-                             dans l'ordre du process
+    niveau_initial    : niveau de danger en entrée de chaîne
+    facteur_par_etape : un facteur d'évolution par mesure de maîtrise
+                         (ou par rupture), dans l'ordre du process
     """
     niveau = niveau_initial
-    for taux_survie in taux_survie_par_etape:
-        niveau *= taux_survie
+    for facteur in facteur_par_etape:
+        niveau *= facteur
     return niveau
 
-# Exemple d'appel — chaque taux_survie doit provenir d'une mesure ou
-# d'une source documentée par l'utilisateur pour l'étape correspondante.
-# niveau_sortie = niveau_danger_final(
+# Exemple d'appel — chaque facteur doit provenir d'une mesure ou d'une
+# source documentée par l'utilisateur pour l'étape correspondante.
+# niveau_sortie = niveau_expose_final(
 #     niveau_initial=...,
-#     taux_survie_par_etape=[...],
+#     facteur_par_etape=[...],
 # )
 `;
 
@@ -358,6 +379,13 @@ export default function Partie3AvecQuoi() {
         réelle ici.
       </p>
       <ZValueDemo />
+      <Aside tone="warning">
+        Limite propre à ce modèle : il suppose un traitement{" "}
+        <strong>isotherme</strong> (température constante). Il ignore les
+        phases de montée et de descente en température — pour valider un
+        barème réel, il faut intégrer la valeur F0 sur la courbe de
+        pénétration de chaleur mesurée, pas se limiter à ce seul calcul.
+      </Aside>
 
       <h3>Autre modèle — croissance de pathogène (pH / activité de l'eau)</h3>
       <p>
@@ -369,10 +397,26 @@ export default function Partie3AvecQuoi() {
         LLM structure et commente le code, jamais les paramètres cardinaux
         du pathogène.
       </p>
+      <p>
+        Un point de rigueur mathématique illustre bien pourquoi la relecture
+        humaine reste indispensable même sur du code généré : une forme
+        cardinale correcte doit être bornée à la fois par un pH minimal{" "}
+        <em>et</em> un pH maximal (au-delà, plus aucune croissance), et
+        chaque terme (pH, aw) doit être ramené entre 0 et 1{" "}
+        <strong>séparément</strong> avant d'être combiné — sans quoi un
+        terme qui dépasse 1 peut compenser artificiellement un autre terme
+        défavorable et surestimer le risque de croissance.
+      </p>
       <CodeBlock language="python">{growthModelSnippet}</CodeBlock>
       <GrowthModelDemo />
+      <Aside tone="warning">
+        Limite propre à ce modèle : il ne couvre que l'effet pH/aw. Il
+        ignore la température, l'atmosphère (sous vide, MAP) et les
+        interactions entre facteurs — un modèle publié complet (Baranyi,
+        Gompertz) est nécessaire pour une validation réelle.
+      </Aside>
 
-      <h3>Autre modèle — impact d'une combinaison de mesures le long de la chaîne</h3>
+      <h3>Autre modèle — propagation de l'exposition le long de la chaîne</h3>
       <p>
         Le Codex mentionne enfin les modèles basés sur les risques, qui
         examinent l'impact d'une mesure ou d'une combinaison de mesures tout
@@ -381,8 +425,22 @@ export default function Partie3AvecQuoi() {
         dispositif d'inspection est traduit en niveau de risque résiduel
         pour le consommateur.
       </p>
+      <p>
+        Le mot est important : ce qui suit est un modèle{" "}
+        <strong>d'exposition</strong> — il propage un niveau de danger à
+        travers une succession d'étapes — pas un modèle de risque complet au
+        sens du Codex, qui suppose en plus une relation dose-réponse pour
+        estimer une probabilité de maladie. C'est la brique d'entrée d'un
+        modèle de risque, pas le modèle lui-même.
+      </p>
       <CodeBlock language="python">{riskModelSnippet}</CodeBlock>
       <RiskModelDemo />
+      <Aside tone="warning">
+        Limite propre à ce modèle : c'est un volet exposition uniquement. Un
+        modèle de risque complet (à la manière de l'Exemple 5) exige en plus
+        une relation dose-réponse et le traitement de la distribution
+        d'incertitude — pas seulement un produit de facteurs déterministes.
+      </Aside>
 
       <h3>Scénario d'usage — Exemple 5 (inspection de la viande, Taenia saginata)</h3>
       <p>
@@ -393,7 +451,7 @@ export default function Partie3AvecQuoi() {
         actuel pour la population) sans lui demander la moindre valeur
         numérique. Le LLM aide à écrire et à commenter le code qui combine
         ces taux en un niveau de risque résiduel — la fonction{" "}
-        <code>niveau_danger_final</code> ci-dessus en est un exemple simplifié
+        <code>niveau_expose_final</code> ci-dessus en est un exemple simplifié
         — et à documenter chaque étape du calcul pour qu'elle reste
         vérifiable par un tiers. Les taux de non-détection eux-mêmes
         viennent exclusivement des essais expérimentaux menés par

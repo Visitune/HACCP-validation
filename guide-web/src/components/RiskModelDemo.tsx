@@ -12,30 +12,33 @@ const HEIGHT = PAD.top + PLOT_H + PAD.bottom;
 
 export default function RiskModelDemo() {
   const [initialExp, setInitialExp] = useState(5);
-  const [taux, setTaux] = useState([0.1, 0.4, 0.05, 0.3]);
+  // Un facteur > 1 (ex. étape 3) représente une croissance — rupture de
+  // chaîne du froid — le cas le plus fréquent en pratique et impossible
+  // à représenter avec un simple "taux de survie" borné à [0,1].
+  const [facteurs, setFacteurs] = useState([0.1, 0.4, 1.8, 0.3]);
 
   const niveauInitial = 10 ** initialExp;
 
   const niveaux = useMemo(() => {
     const values = [niveauInitial];
     let current = niveauInitial;
-    for (const t of taux) {
-      current *= t;
+    for (const f of facteurs) {
+      current *= f;
       values.push(current);
     }
     return values;
-  }, [niveauInitial, taux]);
+  }, [niveauInitial, facteurs]);
 
-  const maxLog = Math.log10(niveauInitial + 1) || 1;
+  const maxLog = Math.max(...niveaux.map((v) => Math.log10(v + 1)), 1e-6);
   const barHeight = (value: number) =>
     Math.max(2, (Math.log10(value + 1) / maxLog) * PLOT_H);
 
-  const updateTaux = (index: number, value: number) => {
-    setTaux((prev) => prev.map((t, i) => (i === index ? value : t)));
+  const updateFacteur = (index: number, value: number) => {
+    setFacteurs((prev) => prev.map((f, i) => (i === index ? value : f)));
   };
 
   return (
-    <DemoFrame title="Simulation — impact cumulé le long de la chaîne">
+    <DemoFrame title="Simulation — propagation d'exposition le long de la chaîne">
       <div className="demo-controls">
         <Slider
           label="Niveau initial (échelle log)"
@@ -45,28 +48,38 @@ export default function RiskModelDemo() {
           step={1}
           onChange={setInitialExp}
         />
-        {taux.map((t, i) => (
+        {facteurs.map((f, i) => (
           <Slider
             key={i}
-            label={`Taux de survie — ${STEP_LABELS[i + 1]}`}
-            value={t}
+            label={`Facteur — ${STEP_LABELS[i + 1]} (>1 = croissance)`}
+            value={f}
             min={0}
-            max={1}
-            step={0.01}
-            onChange={(v) => updateTaux(i, v)}
+            max={3}
+            step={0.05}
+            onChange={(v) => updateFacteur(i, v)}
           />
         ))}
       </div>
       <div className="demo-visual">
-        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%" role="img" aria-label="Niveau de danger après chaque étape de la chaîne">
+        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%" role="img" aria-label="Niveau d'exposition après chaque étape de la chaîne, échelle logarithmique">
+          <text x={PAD.left} y={16} fontSize="10" fill="var(--color-text-faint)">échelle log₁₀ · unité arbitraire</text>
           <line x1={PAD.left} y1={PAD.top + PLOT_H} x2={WIDTH - PAD.right} y2={PAD.top + PLOT_H} stroke="var(--color-border)" />
           {niveaux.map((value, i) => {
             const h = barHeight(value);
             const x = PAD.left + i * (BAR_W + GAP);
             const y = PAD.top + (PLOT_H - h);
+            const grew = i > 0 && facteurs[i - 1] > 1;
             return (
               <g key={i}>
-                <rect x={x} y={y} width={BAR_W} height={h} fill="var(--color-demo)" fillOpacity={0.35 + 0.5 * (1 - i / (niveaux.length - 1))} rx="3" />
+                <rect
+                  x={x}
+                  y={y}
+                  width={BAR_W}
+                  height={h}
+                  fill={grew ? "var(--color-scenario)" : "var(--color-demo)"}
+                  fillOpacity={0.35 + 0.5 * (1 - i / (niveaux.length - 1))}
+                  rx="3"
+                />
                 <text x={x + BAR_W / 2} y={y - 7} fontSize="10" fontWeight="600" textAnchor="middle" fill="var(--color-text)">
                   {value >= 100 ? value.toExponential(1) : value.toFixed(2)}
                 </text>
@@ -80,7 +93,7 @@ export default function RiskModelDemo() {
         <div className="demo-result">
           Niveau final ={" "}
           <strong>{niveaux[niveaux.length - 1].toExponential(2)}</strong>{" "}
-          (unité arbitraire)
+          (unité arbitraire, échelle log)
         </div>
       </div>
     </DemoFrame>

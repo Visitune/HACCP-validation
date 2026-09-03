@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-bottom: 0.9rem;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
 .flow-player-btn {
@@ -11,20 +11,20 @@
   align-items: center;
   gap: 0.45rem;
   min-height: 40px;
-  padding: 0.5rem 1rem;
-  border-radius: 999px;
-  border: 1px solid var(--color-accent);
-  background: var(--color-accent);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-accent-fill);
+  background: var(--color-accent-fill);
   color: #fff;
   font-family: var(--font-sans);
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition: filter var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .flow-player-btn:hover {
-  background: var(--color-accent-dark);
+  filter: brightness(0.88);
   transform: translateY(-1px);
 }
 
@@ -36,16 +36,18 @@
 .flow-player-btn--ghost {
   background: transparent;
   color: var(--color-accent-dark);
+  border-color: var(--color-accent);
 }
 
 .flow-player-btn--ghost:hover {
   background: var(--color-accent-soft);
+  filter: none;
   transform: none;
 }
 
 .flow-player-status {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: var(--text-sm);
   color: var(--color-text-faint);
 }
 

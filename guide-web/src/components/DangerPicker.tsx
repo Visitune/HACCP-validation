@@ -54,19 +54,24 @@ const PRESETS: Preset[] = [
     approcheLabel: "Essais scientifiques expérimentaux",
     trame: `1. Étapes préalables
    a. Danger : Listeria monocytogenes [à confirmer]
-   b. Résultat de sécurité sanitaire requis : [critère réglementaire
-      applicable, ex. absence dans 25 g — à vérifier]
+   b. Résultat de sécurité sanitaire requis : classement du produit
+      (aw ≤ 0,92 seule suffit — Annexe II §3.2, règlement (CE)
+      2073/2005) ouvrant droit au critère 100 ufc/g sur toute la DLC,
+      SOUS RÉSERVE d'une validation physico-chimique documentée
+      (règlement (UE) 2024/2895, échéance 1er juillet 2026) ; sans
+      cette validation, critère par défaut = absence dans 25 g
    c. Mesure de maîtrise à valider : affinage (pH / aw / durée)
 
 2. Approche suggérée : Essais expérimentaux (Approche 2)
    — aucune documentation ne couvre cette recette/diamètre/durée
    précis (cf. Partie 2, Approche 2)
 
-3. Paramètres et critères de décision : [souches de substitut,
-   paliers de mesure, marge de sécurité pour la variabilité]
+3. Paramètres et critères de décision : [souches de terrain réelles
+   pour le challenge test en labo accrédité, delta log ≤ 0,5 visé,
+   marge de sécurité pour la variabilité]
 
-4. Documentation à réunir : [protocole du challenge test, résultats
-   de laboratoire externe]
+4. Documentation à réunir : [protocole du challenge test EFSA 2023,
+   résultats de laboratoire accrédité, mesures pH/aw sur 3 lots]
 
 5-6. Analyse, documentation et conclusion : [à conduire une fois
    les résultats du laboratoire obtenus]`,
@@ -135,7 +140,7 @@ export default function DangerPicker() {
 
   return (
     <div className="danger-picker">
-      <div className="danger-picker-tabs" role="tablist" aria-label="Choisir un cas pour régénérer la trame">
+      <div className="danger-picker-tabs" role="group" aria-label="Choisir un cas pour régénérer la trame">
         {PRESETS.map((preset) => {
           const Icon = preset.icon;
           const isSelected = preset.id === selectedId;
@@ -143,8 +148,7 @@ export default function DangerPicker() {
             <button
               key={preset.id}
               type="button"
-              role="tab"
-              aria-selected={isSelected}
+              aria-pressed={isSelected}
               className={`danger-picker-tab${isSelected ? " is-selected" : ""}`}
               onClick={() => setSelectedId(preset.id)}
             >
@@ -155,7 +159,7 @@ export default function DangerPicker() {
         })}
       </div>
 
-      <div className="danger-picker-panel" key={selected.id}>
+      <div className="danger-picker-panel" key={selected.id} aria-live="polite">
         <div className="danger-picker-summary">
           <div className="danger-picker-field">
             <span className="danger-picker-field-label">Danger</span>

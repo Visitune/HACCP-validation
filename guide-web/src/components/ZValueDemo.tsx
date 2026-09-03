@@ -7,13 +7,13 @@ const HEIGHT = 220;
 const PAD = { top: 18, right: 18, bottom: 34, left: 46 };
 
 export default function ZValueDemo() {
-  const [dRef, setDRef] = useState(0.5);
-  const [zValue, setZValue] = useState(6);
-  const [tRef, setTRef] = useState(121);
-  const [tCible, setTCible] = useState(100);
+  const [dRef, setDRef] = useState(1.0);
+  const [zValue, setZValue] = useState(8.0);
+  const [tRef, setTRef] = useState(100);
+  const [tCible, setTCible] = useState(90);
   const [reductionsLog, setReductionsLog] = useState(5);
 
-  const { dCible, temps, points, tRefPoint, tCiblePoint, tMin, tMax, gridY } = useMemo(() => {
+  const { dCible, temps, points, tRefPoint, tCiblePoint, tMin, tMax, gridLines } = useMemo(() => {
     const dCibleVal = dRef * 10 ** ((tRef - tCible) / zValue);
     const tempsVal = dCibleVal * reductionsLog;
 
@@ -32,7 +32,10 @@ export default function ZValueDemo() {
     const y = (logD: number) =>
       PAD.top + (1 - (logD - logDMin) / logDSpan) * plotH;
 
-    const gridYVal = [0.25, 0.5, 0.75].map((f) => PAD.top + f * plotH);
+    const gridLinesVal = [0.25, 0.5, 0.75].map((f) => ({
+      y: PAD.top + f * plotH,
+      value: logDMax - f * logDSpan,
+    }));
 
     return {
       dCible: dCibleVal,
@@ -42,15 +45,15 @@ export default function ZValueDemo() {
       tCiblePoint: { x: x(tCible), y: y(logDAt(tCible)) },
       tMin: tMinVal,
       tMax: tMaxVal,
-      gridY: gridYVal,
+      gridLines: gridLinesVal,
     };
   }, [dRef, zValue, tRef, tCible, reductionsLog]);
 
   return (
     <DemoFrame title="Simulation — modèle à valeur de Z">
       <div className="demo-controls">
-        <Slider label="D_ref (min)" value={dRef} min={0.1} max={5} step={0.1} onChange={setDRef} />
-        <Slider label="z_value (°C)" value={zValue} min={2} max={15} step={0.5} onChange={setZValue} />
+        <Slider label="D_ref (min)" arbitrary value={dRef} min={0.1} max={5} step={0.1} onChange={setDRef} />
+        <Slider label="z_value (°C)" arbitrary value={zValue} min={2} max={15} step={0.5} onChange={setZValue} />
         <Slider label="T_ref (°C)" value={tRef} min={90} max={135} step={1} unit="°C" onChange={setTRef} />
         <Slider label="T_cible (°C)" value={tCible} min={80} max={130} step={1} unit="°C" onChange={setTCible} />
         <Slider label="Réductions log visées" value={reductionsLog} min={1} max={12} step={1} onChange={setReductionsLog} />
@@ -58,8 +61,11 @@ export default function ZValueDemo() {
       <div className="demo-visual">
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%" role="img" aria-label="Courbe temps de réduction décimale en fonction de la température">
           <rect x={PAD.left} y={PAD.top} width={WIDTH - PAD.left - PAD.right} height={HEIGHT - PAD.top - PAD.bottom} fill="var(--color-demo-soft)" opacity="0.4" />
-          {gridY.map((gy) => (
-            <line key={gy} x1={PAD.left} y1={gy} x2={WIDTH - PAD.right} y2={gy} stroke="var(--color-border)" strokeDasharray="2 3" />
+          {gridLines.map((g) => (
+            <g key={g.y}>
+              <line x1={PAD.left} y1={g.y} x2={WIDTH - PAD.right} y2={g.y} stroke="var(--color-border)" strokeDasharray="2 3" />
+              <text x={PAD.left - 4} y={g.y + 3} fontSize="9" textAnchor="end" fill="var(--color-text-faint)">{g.value.toFixed(1)}</text>
+            </g>
           ))}
           <line x1={PAD.left} y1={PAD.top} x2={PAD.left} y2={HEIGHT - PAD.bottom} stroke="var(--color-border)" />
           <line x1={PAD.left} y1={HEIGHT - PAD.bottom} x2={WIDTH - PAD.right} y2={HEIGHT - PAD.bottom} stroke="var(--color-border)" />

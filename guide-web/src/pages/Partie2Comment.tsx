@@ -132,15 +132,18 @@ export default function Partie2Comment() {
       </p>
       <ScenarioCard title="Cas d'application terrain">
         Une boulangerie industrielle veut valider l'étape de cuisson de son
-        pain de mie vis-à-vis de <em>Salmonella</em>. Le procédé (température
-        à cœur, durée) est un standard largement documenté dans la
-        littérature technique boulangère et par les fournisseurs de fours
+        pain de mie vis-à-vis de <em>Salmonella</em>, dont la source la plus
+        probable dans cette matrice est la farine crue (contaminant
+        d'origine agricole, pas un contaminant de cuisson). Le procédé
+        (température à cœur, durée) est un standard largement documenté dans
+        la littérature technique boulangère et par les fournisseurs de fours
         industriels. Plutôt que de lancer un essai expérimental coûteux, le
         consultant s'appuie sur cette documentation existante : il vérifie
-        que la température à cœur atteinte en fin de cuisson, mesurée sur
-        quelques pains représentatifs des formats produits, correspond bien
-        aux barèmes documentés — et consigne cette comparaison comme preuve
-        de validation.
+        que la température à cœur atteinte en fin de cuisson, mesurée sur un
+        échantillon défendable de pains représentatifs des formats et
+        positions de four produits (pas « quelques pains » choisis au
+        hasard), correspond bien aux barèmes documentés — et consigne cette
+        comparaison comme preuve de validation.
       </ScenarioCard>
       <Aside>
         C'est précisément ici que l'assistance à la collecte et à
@@ -196,12 +199,17 @@ export default function Partie2Comment() {
         est <em>Listeria monocytogenes</em>. Aucune documentation existante
         ne couvre exactement cette combinaison de recette, de diamètre de
         boyau et de conditions de séchage. Le consultant fait réaliser un
-        challenge test en laboratoire externe : des souches non pathogènes
-        de substitut sont ajoutées à la préparation, le produit est suivi
-        pendant tout l'affinage, et la réduction (ou l'absence de croissance)
-        du pathogène de substitut est mesurée à plusieurs paliers. Le résultat
-        sert de preuve que la combinaison pH / activité de l'eau / durée
-        d'affinage maîtrise effectivement le danger.
+        challenge test — une étude de croissance, pas de réduction — en
+        laboratoire externe <strong>accrédité</strong> : c'est le pathogène
+        réel qui est utilisé (cocktail d'au moins trois souches de terrain),
+        et non un substitut — les substituts servent aux essais menés
+        directement en usine, précisément pour ne jamais introduire le
+        pathogène dans l'installation de production (cf. Partie 2, Approche
+        2). Le produit est suivi sur toute la durée de vie visée, y compris
+        en conditions d'abus de température, et la croissance mesurée à
+        plusieurs paliers. Le résultat sert de preuve que la combinaison pH /
+        activité de l'eau / durée d'affinage maîtrise effectivement le
+        danger.
       </ScenarioCard>
       <Aside>
         Voir Partie 3, bloc 3 : l'aide à la modélisation et au code peut
@@ -266,8 +274,10 @@ export default function Partie2Comment() {
         (réceptions de fin d'année), des sondes de température enregistrent
         la courbe de refroidissement de plusieurs lots représentatifs des
         formats et volumes produits. Les données sont ensuite comparées au
-        seuil réglementaire de temps de passage en zone à risque (10 °C à
-        63 °C). Le consultant s'assure que le plan de prélèvement couvre bien
+        repère réglementaire français du refroidissement rapide (63 °C à
+        10 °C en moins de deux heures — arrêté du 21 décembre 2009, à
+        vérifier pour l'article exact applicable au produit du client). Le
+        consultant s'assure que le plan de prélèvement couvre bien
         les cas les plus défavorables (plus gros volumes, bacs les plus
         remplis), pas seulement les conditions moyennes.
       </ScenarioCard>
@@ -338,10 +348,14 @@ export default function Partie2Comment() {
         un modèle de destruction thermique (valeur F0) pour recalculer le
         temps de traitement nécessaire à ce nouveau format, à partir des
         courbes de pénétration de chaleur mesurées avec des capteurs
-        introduits dans quelques boîtes témoins. Le modèle est ensuite
-        vérifié par un nombre limité d'essais réels avant validation
-        définitive — exactement la logique de l'Exemple 5 (essais +
-        modélisation combinés), transposée à un contexte de stérilisation.
+        introduits au <strong>point le plus froid</strong> de boîtes témoins
+        (localisé au préalable, car il dépend de la texture du produit et du
+        format), dans les conditions de charge d'autoclave les plus
+        défavorables. Le modèle est ensuite vérifié par un nombre limité
+        d'essais réels avant validation définitive — exactement la logique
+        de l'Exemple 5 (essais + modélisation combinés), transposée à un
+        contexte de stérilisation encadré par la réglementation spécifique
+        aux traitements appertisés.
       </ScenarioCard>
       <Aside tone="warning">
         C'est l'approche la plus directement concernée par le garde-fou de la
@@ -392,15 +406,21 @@ export default function Partie2Comment() {
       <ScenarioCard title="Cas d'application terrain">
         Un fabricant de plats cuisinés réfrigérés ajoute une consigne de
         réchauffage sur son emballage (« à consommer chaud, réchauffer à
-        cœur avant consommation ») comme mesure de maîtrise complémentaire
-        contre <em>Listeria monocytogenes</em>. Pour valider cette étiquette
-        comme mesure de maîtrise réelle — et pas seulement comme mention
-        réglementaire — l'entreprise fait réaliser une enquête
-        représentative auprès de consommateurs de la cible visée, pour
-        mesurer combien comprennent la consigne et déclarent l'appliquer
-        systématiquement. Comme dans l'Exemple 6, ce n'est pas l'efficacité
-        microbiologique du réchauffage qui est en question (déjà établie),
-        mais l'adoption réelle de la consigne par ceux qui la lisent.
+        cœur avant consommation ») en{" "}
+        <strong>complément</strong> de sa maîtrise interne de{" "}
+        <em>Listeria monocytogenes</em> — jamais à sa place : le fabricant
+        reste tenu, indépendamment de cette consigne, de respecter le
+        critère microbiologique applicable sur toute la durée de vie du
+        produit (une exigence encore renforcée par le règlement (UE)
+        2024/2895, dont la règle par défaut est l'absence dans 25 g en
+        l'absence de validation robuste). Pour valider l'étiquette comme
+        mesure de maîtrise complémentaire réelle, l'entreprise fait réaliser
+        une enquête représentative auprès de consommateurs de la cible
+        visée, pour mesurer combien comprennent la consigne et déclarent
+        l'appliquer systématiquement. Comme dans l'Exemple 6, ce n'est pas
+        l'efficacité microbiologique du réchauffage qui est en question
+        (déjà établie), mais l'adoption réelle de la consigne par ceux qui
+        la lisent.
       </ScenarioCard>
       <Aside>
         Peu couverte par l'assistance IA envisagée en Partie 3 dans ce guide

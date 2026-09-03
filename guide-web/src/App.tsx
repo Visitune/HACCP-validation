@@ -10,8 +10,11 @@ import "./App.css";
 export default function App() {
   return (
     <div className="layout">
+      <a href="#main-content" className="skip-link">
+        Aller au contenu principal
+      </a>
       <Sidebar />
-      <main className="content">
+      <main className="content" id="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/partie-1-pourquoi" element={<Partie1Pourquoi />} />

@@ -1,18 +1,18 @@
 .danger-picker {
-  margin: 1.75rem 0;
+  margin: var(--space-7) 0;
   border: 1px solid var(--color-demo);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   background: var(--color-paper);
-  box-shadow: 0 2px 10px rgba(30, 29, 24, 0.05);
+  box-shadow: var(--shadow-sm);
   max-width: 760px;
 }
 
 .danger-picker-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.9rem 1rem;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-4);
   background: var(--color-demo-soft);
   border-bottom: 1px solid var(--color-demo);
 }
@@ -22,16 +22,16 @@
   align-items: center;
   gap: 0.45rem;
   min-height: 40px;
-  padding: 0.45rem 0.85rem;
-  border-radius: 999px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
   border: 1px solid var(--color-border);
-  background: #fff;
+  background: var(--color-paper);
   color: var(--color-text-muted);
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
 
 .danger-picker-tab:hover {
@@ -45,15 +45,15 @@
 }
 
 .danger-picker-tab.is-selected {
-  background: var(--color-demo);
-  border-color: var(--color-demo);
+  background: var(--color-demo-fill);
+  border-color: var(--color-demo-fill);
   color: #fff;
   transform: translateY(-1px);
 }
 
 .danger-picker-panel {
-  padding: 1.25rem 1.4rem 1.4rem;
-  animation: danger-panel-in 0.28s ease;
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  animation: danger-panel-in var(--transition-base);
 }
 
 @keyframes danger-panel-in {
@@ -70,22 +70,22 @@
 .danger-picker-summary {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
+  gap: var(--space-3) var(--space-6);
   align-items: flex-end;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .danger-picker-field {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  font-size: 0.85rem;
+  font-size: var(--text-base);
   color: var(--color-text);
 }
 
 .danger-picker-field-label {
   font-family: var(--font-sans);
-  font-size: 0.68rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -95,14 +95,14 @@
 .danger-picker-approach {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   margin-left: auto;
-  padding: 0.35rem 0.8rem;
-  border-radius: 999px;
+  padding: 0.35rem var(--space-3);
+  border-radius: var(--radius-full);
   background: var(--color-accent-soft);
   color: var(--color-accent-dark);
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
@@ -112,23 +112,23 @@
   justify-content: center;
   width: 18px;
   height: 18px;
-  border-radius: 50%;
-  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  background: var(--color-accent-fill);
   color: #fff;
-  font-size: 0.68rem;
+  font-size: var(--text-xs);
 }
 
 .danger-picker-trame {
   margin: 0;
-  padding: 1rem 1.1rem;
+  padding: var(--space-4) var(--space-5);
   background: var(--color-code-bg);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   overflow-x: auto;
 }
 
 .danger-picker-trame code {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   line-height: 1.6;
   color: var(--color-code-text);
   white-space: pre;

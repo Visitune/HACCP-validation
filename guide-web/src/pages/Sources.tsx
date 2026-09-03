@@ -4,10 +4,11 @@ export default function Sources() {
       <div className="page-kicker">Références</div>
       <h1 className="page-title">Sources</h1>
       <p className="page-lede">
-        Ce guide s'appuie exclusivement sur un seul texte officiel pour ses
-        affirmations méthodologiques : le CAC/GL 69-2008. Chaque citation des
-        Parties 1 et 2 renvoie ici vers le document réel, à la page
-        correspondante, pour que chaque affirmation reste vérifiable.
+        Ce guide s'appuie sur un texte officiel pour ses affirmations
+        méthodologiques — le CAC/GL 69-2008 — et sur des textes
+        réglementaires européens et français pour les cas d'application
+        terrain de la Partie 2. Chaque citation renvoie ici vers le document
+        réel, pour que chaque affirmation reste vérifiable.
       </p>
 
       <h2>CAC/GL 69-2008 — Directives relatives à la validation des mesures de maîtrise de la sécurité alimentaire</h2>
@@ -62,6 +63,46 @@ export default function Sources() {
             <tr><th scope="row">Annexe I — Exemple 6</th><td>Étiquette, œufs en coquille</td><td>16–17</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <h2>Textes réglementaires cités dans les cas d'application terrain (Partie 2)</h2>
+      <p>
+        Ces cas sont des scénarios pédagogiques, pas des exemples officiels
+        du Codex — mais les textes réglementaires qu'ils citent, eux, sont
+        réels. Liens externes (EUR-Lex, Légifrance), non hébergés dans ce
+        guide.
+      </p>
+      <div className="source-grid">
+        <a className="source-card" href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32005R2073" target="_blank" rel="noopener noreferrer">
+          <div className="source-card-title">Règlement (CE) n° 2073/2005</div>
+          <p className="source-card-desc">
+            Critères microbiologiques applicables aux denrées alimentaires —
+            Annexe II §3.2 (classement « favorise / ne favorise pas la
+            croissance » de <em>Listeria monocytogenes</em>), cité dans le
+            cas saucisson sec (Approche 2).
+          </p>
+          <span className="source-card-link">Ouvrir sur EUR-Lex ↗</span>
+        </a>
+        <a className="source-card" href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=OJ:L_202402895" target="_blank" rel="noopener noreferrer">
+          <div className="source-card-title">Règlement (UE) 2024/2895</div>
+          <p className="source-card-desc">
+            Modifie le 2073/2005 : conformité démontrée sur toute la durée
+            de vie, critère par défaut absence/25 g, échéance 1er juillet
+            2026. Cité dans les cas saucisson sec et réchauffage (Approches
+            2 et 5).
+          </p>
+          <span className="source-card-link">Ouvrir sur EUR-Lex ↗</span>
+        </a>
+        <a className="source-card" href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000021676699" target="_blank" rel="noopener noreferrer">
+          <div className="source-card-title">Arrêté du 21 décembre 2009</div>
+          <p className="source-card-desc">
+            Températures de conservation des denrées, cité pour le repère de
+            refroidissement rapide (cas traiteur, Approche 3) — l'article
+            exact applicable dépend du produit et reste à vérifier au cas
+            par cas.
+          </p>
+          <span className="source-card-link">Ouvrir sur Légifrance ↗</span>
+        </a>
       </div>
 
       <p className="note-box">
