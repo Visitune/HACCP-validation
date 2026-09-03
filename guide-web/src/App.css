@@ -32,12 +32,7 @@
   font-size: clamp(1.65rem, 1.1rem + 3.2vw, var(--text-4xl));
   line-height: 1.15;
   margin: 0 0 var(--space-4);
-}
-
-@media (min-width: 640px) {
-  .hero-title {
-    max-width: 15ch;
-  }
+  max-width: 32ch;
 }
 
 .hero-stats {
