@@ -12,14 +12,6 @@
   margin: 0 auto;
 }
 
-/* Prose stays a readable measure; components below opt out to go full-width. */
-.article > p,
-.article > ul,
-.article > ol,
-.page-lede {
-  max-width: 72ch;
-}
-
 @media (max-width: 860px) {
   .layout {
     flex-direction: column;
@@ -37,10 +29,15 @@
 }
 
 .hero-title {
-  font-size: var(--text-4xl);
+  font-size: clamp(1.65rem, 1.1rem + 3.2vw, var(--text-4xl));
   line-height: 1.15;
   margin: 0 0 var(--space-4);
-  max-width: 15ch;
+}
+
+@media (min-width: 640px) {
+  .hero-title {
+    max-width: 15ch;
+  }
 }
 
 .hero-stats {
