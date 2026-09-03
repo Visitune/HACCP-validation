@@ -6,8 +6,8 @@ const PH_AXIS: [number, number] = [3, 8];
 const AW_AXIS: [number, number] = [0.85, 1.0];
 const GRID_X = 20;
 const GRID_Y = 14;
-const CELL = 12;
-const PAD = { top: 8, right: 8, bottom: 22, left: 30 };
+const CELL = 14;
+const PAD = { top: 10, right: 12, bottom: 26, left: 34 };
 const WIDTH = PAD.left + GRID_X * CELL + PAD.right;
 const HEIGHT = PAD.top + GRID_Y * CELL + PAD.bottom;
 
@@ -70,9 +70,12 @@ export default function GrowthModelDemo() {
               fillOpacity={cell.opacity}
             />
           ))}
-          <text x={PAD.left} y={HEIGHT - 6} fontSize="9" fill="var(--color-text-faint)">pH →</text>
-          <text x={2} y={PAD.top + 8} fontSize="9" fill="var(--color-text-faint)">aw ↑</text>
-          <circle cx={markerX} cy={markerY} r="4.5" fill="#fff" stroke="var(--color-accent-dark)" strokeWidth="2" />
+          <rect x={PAD.left} y={PAD.top} width={GRID_X * CELL} height={GRID_Y * CELL} fill="none" stroke="var(--color-border)" />
+          <text x={PAD.left} y={HEIGHT - 10} fontSize="10" fill="var(--color-text-faint)">pH {PH_AXIS[0]}</text>
+          <text x={PAD.left + GRID_X * CELL} y={HEIGHT - 10} fontSize="10" textAnchor="end" fill="var(--color-text-faint)">pH {PH_AXIS[1]}</text>
+          <text x={2} y={PAD.top + 9} fontSize="10" fill="var(--color-text-faint)">aw {AW_AXIS[1]}</text>
+          <text x={2} y={PAD.top + GRID_Y * CELL} fontSize="10" fill="var(--color-text-faint)">aw {AW_AXIS[0]}</text>
+          <circle cx={markerX} cy={markerY} r="5" fill="#fff" stroke="var(--color-accent-dark)" strokeWidth="2.5" />
         </svg>
         <div className="demo-result">
           Facteur de croissance relatif ={" "}

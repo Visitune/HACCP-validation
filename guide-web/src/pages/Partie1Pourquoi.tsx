@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Quote from "../components/Quote";
 import Aside from "../components/Aside";
 import Toc from "../components/Toc";
@@ -54,7 +55,7 @@ export default function Partie1Pourquoi() {
         <strong>pas une exigence réservée aux CCP</strong>. Le champ
         d'application (Section II) est explicite :
       </p>
-      <Quote source="CAC/GL 69-2008, Section II — Champ d'application">
+      <Quote source="CAC/GL 69-2008, Section II — Champ d'application" href="/sources/CXG_069f.pdf#page=1">
         « Les présentes directives s'appliquent à la validation de mesures
         de maîtrise dans l'ensemble de la chaîne alimentaire. Ces directives
         visent à fournir des orientations à l'industrie et aux gouvernements
@@ -78,7 +79,7 @@ export default function Partie1Pourquoi() {
         exercice — un point souvent flou dans l'esprit d'un opérateur qui
         pense « c'est l'auditeur qui validera » :
       </p>
-      <Quote source="CAC/GL 69-2008, Section I — Introduction">
+      <Quote source="CAC/GL 69-2008, Section I — Introduction" href="/sources/CXG_069f.pdf#page=1">
         « L'industrie est responsable de la validation des mesures de
         maîtrise, alors que les autorités compétentes s'assurent que
         l'industrie possède des systèmes de validation efficaces et
@@ -97,7 +98,7 @@ export default function Partie1Pourquoi() {
         Deuxième chose à fixer : ce que « valider » veut dire précisément. La
         Section III donne la définition officielle :
       </p>
-      <Quote source="CAC/GL 69-2008, Section III — Définitions">
+      <Quote source="CAC/GL 69-2008, Section III — Définitions" href="/sources/CXG_069f.pdf#page=2">
         <strong>Validation :</strong> obtention de preuves que les mesures de
         maîtrise permettent de contrôler le danger, à condition d'être
         correctement mises en œuvre.
@@ -111,7 +112,7 @@ export default function Partie1Pourquoi() {
         d'atteindre le résultat de sécurité sanitaire requis. La Section IV
         le précise :
       </p>
-      <Quote source="CAC/GL 69-2008, Section IV — Concept et nature de la validation">
+      <Quote source="CAC/GL 69-2008, Section IV — Concept et nature de la validation" href="/sources/CXG_069f.pdf#page=2">
         « La validation est effectuée au moment de la conception de
         nouvelles mesures de maîtrise ou d'un nouveau système de maîtrise de
         la sécurité sanitaire des aliments, ou lorsque des changements
@@ -165,7 +166,7 @@ export default function Partie1Pourquoi() {
         lui-même reconnaît une partie du problème, en creux, dès la Section
         II :
       </p>
-      <Quote source="CAC/GL 69-2008, Section II — Champ d'application">
+      <Quote source="CAC/GL 69-2008, Section II — Champ d'application" href="/sources/CXG_069f.pdf#page=1">
         « Les outils, techniques et principes statistiques qui seraient
         utilisés pour valider les mesures de maîtrise pour la sécurité
         sanitaire des aliments spécifiques dépassent le cadre du présent
@@ -379,7 +380,8 @@ export default function Partie1Pourquoi() {
         et nature de la validation, distinction
         validation/surveillance/vérification), V (étapes préalables,
         ressources), VI (les 5 approches, mention du modèle à valeur de Z),
-        VII (nécessité de revalidation, mentionnée en creux).
+        VII (nécessité de revalidation, mentionnée en creux). Voir la page{" "}
+        <Link to="/sources">Sources</Link> pour ouvrir le document complet.
       </p>
     </article>
   );

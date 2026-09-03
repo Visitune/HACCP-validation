@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Aside from "../components/Aside";
 import Toc from "../components/Toc";
 import Tldr from "../components/Tldr";
@@ -115,6 +116,9 @@ export default function Partie2Comment() {
         avec la cinétique de contamination (24 à 48 heures selon la
         littérature citée).
       </p>
+      <a className="source-link" href="/sources/CXG_069f.pdf#page=9" target="_blank" rel="noopener noreferrer">
+        Voir Annexe I, Exemple 1 dans le PDF (p. 9–11) ↗
+      </a>
       <h3>Quand c'est adapté</h3>
       <p>
         Cette approche est la plus économique dès qu'un antécédent fiable
@@ -174,6 +178,9 @@ export default function Partie2Comment() {
         calcul statistique explicite (moyenne géométrique + 3 écarts-types)
         pour absorber la variabilité du processus.
       </p>
+      <a className="source-link" href="/sources/CXG_069f.pdf#page=11" target="_blank" rel="noopener noreferrer">
+        Voir Annexe I, Exemple 2 dans le PDF (p. 11–13) ↗
+      </a>
       <h3>Quand c'est adapté</h3>
       <p>
         Cette approche convient quand le danger est bien caractérisé mais
@@ -238,6 +245,9 @@ export default function Partie2Comment() {
           réelle des fragments qui passent le tamis.
         </li>
       </ul>
+      <a className="source-link" href="/sources/CXG_069f.pdf#page=13" target="_blank" rel="noopener noreferrer">
+        Voir Annexe I, Exemples 3 (p. 13) et 4 (p. 14) dans le PDF ↗
+      </a>
       <h3>Quand c'est adapté</h3>
       <p>
         C'est l'approche à privilégier quand aucune documentation ni essai en
@@ -307,6 +317,9 @@ export default function Partie2Comment() {
         prévalence en Nouvelle-Zélande, ne serait probablement pas
         transposable tel quel dans un pays à prévalence modérée à élevée.
       </p>
+      <a className="source-link" href="/sources/CXG_069f.pdf#page=15" target="_blank" rel="noopener noreferrer">
+        Voir Annexe I, Exemple 5 dans le PDF (p. 15–16) ↗
+      </a>
       <h3>Quand c'est adapté</h3>
       <p>
         Cette approche est puissante pour explorer des scénarios (nouvelles
@@ -365,6 +378,9 @@ export default function Partie2Comment() {
         qui suffit, selon l'évaluation des risques associée, à réduire
         fortement le nombre de cas.
       </p>
+      <a className="source-link" href="/sources/CXG_069f.pdf#page=16" target="_blank" rel="noopener noreferrer">
+        Voir Annexe I, Exemple 6 dans le PDF (p. 16–17) ↗
+      </a>
       <h3>Quand c'est adapté</h3>
       <p>
         Cette approche est la seule des cinq à porter sur un comportement
@@ -435,7 +451,9 @@ export default function Partie2Comment() {
 
       <p className="note-box">
         Sections/Annexes citées : VI (les 5 approches), Annexe I Exemples 1 à
-        6, V (critères de priorisation).
+        6, V (critères de priorisation). Voir la page{" "}
+        <Link to="/sources">Sources</Link> pour ouvrir le document complet et
+        les liens directs de chaque exemple.
       </p>
     </article>
   );

@@ -6,6 +6,7 @@ const links = [
   { to: "/partie-1-pourquoi", label: "Partie 1 — Pourquoi" },
   { to: "/partie-2-comment", label: "Partie 2 — Comment (illustré)" },
   { to: "/partie-3-avec-quoi", label: "Partie 3 — Avec quoi" },
+  { to: "/sources", label: "Sources" },
 ];
 
 export default function Sidebar() {

@@ -19,3 +19,13 @@
   font-style: normal;
   color: var(--color-text-faint);
 }
+
+.quote figcaption a {
+  color: var(--color-accent-dark);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.quote figcaption a:hover {
+  color: var(--color-accent);
+}

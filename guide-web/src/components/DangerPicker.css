@@ -1,9 +1,11 @@
 .danger-picker {
-  margin: 1.5rem 0;
+  margin: 1.75rem 0;
   border: 1px solid var(--color-demo);
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background: var(--color-paper);
+  box-shadow: 0 2px 10px rgba(30, 29, 24, 0.05);
+  max-width: 760px;
 }
 
 .danger-picker-tabs {

@@ -3,11 +3,11 @@ import Slider from "./Slider";
 import DemoFrame from "./DemoFrame";
 
 const STEP_LABELS = ["Entrée", "Étape 1", "Étape 2", "Étape 3", "Étape 4"];
-const PAD = { top: 12, right: 8, bottom: 34, left: 8 };
-const BAR_W = 42;
-const GAP = 12;
-const PLOT_H = 130;
-const WIDTH = PAD.left + STEP_LABELS.length * (BAR_W + GAP) + PAD.right;
+const PAD = { top: 26, right: 10, bottom: 36, left: 10 };
+const BAR_W = 48;
+const GAP = 16;
+const PLOT_H = 140;
+const WIDTH = PAD.left + STEP_LABELS.length * (BAR_W + GAP) - GAP + PAD.right;
 const HEIGHT = PAD.top + PLOT_H + PAD.bottom;
 
 export default function RiskModelDemo() {
@@ -59,17 +59,18 @@ export default function RiskModelDemo() {
       </div>
       <div className="demo-visual">
         <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%" role="img" aria-label="Niveau de danger après chaque étape de la chaîne">
+          <line x1={PAD.left} y1={PAD.top + PLOT_H} x2={WIDTH - PAD.right} y2={PAD.top + PLOT_H} stroke="var(--color-border)" />
           {niveaux.map((value, i) => {
             const h = barHeight(value);
             const x = PAD.left + i * (BAR_W + GAP);
             const y = PAD.top + (PLOT_H - h);
             return (
               <g key={i}>
-                <rect x={x} y={y} width={BAR_W} height={h} fill="var(--color-demo)" fillOpacity={0.75} rx="2" />
-                <text x={x + BAR_W / 2} y={y - 5} fontSize="8" textAnchor="middle" fill="var(--color-text)">
+                <rect x={x} y={y} width={BAR_W} height={h} fill="var(--color-demo)" fillOpacity={0.35 + 0.5 * (1 - i / (niveaux.length - 1))} rx="3" />
+                <text x={x + BAR_W / 2} y={y - 7} fontSize="10" fontWeight="600" textAnchor="middle" fill="var(--color-text)">
                   {value >= 100 ? value.toExponential(1) : value.toFixed(2)}
                 </text>
-                <text x={x + BAR_W / 2} y={PAD.top + PLOT_H + 13} fontSize="8" textAnchor="middle" fill="var(--color-text-faint)">
+                <text x={x + BAR_W / 2} y={PAD.top + PLOT_H + 16} fontSize="10" textAnchor="middle" fill="var(--color-text-faint)">
                   {STEP_LABELS[i]}
                 </text>
               </g>

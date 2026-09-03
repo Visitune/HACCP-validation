@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Aside from "../components/Aside";
 import CodeBlock from "../components/CodeBlock";
 import Toc from "../components/Toc";
@@ -443,6 +444,8 @@ export default function Partie3AvecQuoi() {
         Blocs couverts : structuration méthodologique, assistance à la
         collecte de données (priorisé), aide à la modélisation/code (code
         commenté + démonstration interactive à valeurs fictives), garde-fous.
+        Voir la page <Link to="/sources">Sources</Link> pour le document
+        Codex complet.
       </p>
     </article>
   );
