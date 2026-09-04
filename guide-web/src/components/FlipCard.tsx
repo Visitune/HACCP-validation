@@ -17,19 +17,20 @@ export default function FlipCard({ icon: Icon, term, children }: FlipCardProps) 
       aria-pressed={flipped}
       onClick={() => setFlipped((prev) => !prev)}
     >
-      <span className="flip-card-inner">
-        <span className="flip-card-face flip-card-front" aria-hidden={flipped}>
+      {!flipped ? (
+        <span className="flip-card-face flip-card-front" key="front">
           <span className="flip-card-icon">
             <Icon />
           </span>
           <span className="flip-card-term">{term}</span>
           <span className="flip-card-hint">Touchez pour voir la définition</span>
         </span>
-        <span className="flip-card-face flip-card-back" aria-hidden={!flipped}>
+      ) : (
+        <span className="flip-card-face flip-card-back" key="back">
           <span className="flip-card-term flip-card-term--back">{term}</span>
           <span className="flip-card-definition">{children}</span>
         </span>
-      </span>
+      )}
     </button>
   );
 }
