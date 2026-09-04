@@ -1,0 +1,114 @@
+.accordion {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+  background: var(--color-paper);
+  overflow: hidden;
+}
+
+.accordion.is-open {
+  border-color: var(--color-accent);
+}
+
+.article .accordion-heading-row {
+  margin: 0;
+  padding-top: 0;
+  border-top: none;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+
+.accordion-header:hover {
+  background: var(--color-hover);
+}
+
+.accordion-header:focus-visible {
+  outline: 2px solid var(--color-accent-dark);
+  outline-offset: -2px;
+}
+
+.accordion-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.is-open .accordion-icon {
+  background: var(--color-accent-fill);
+  color: #fff;
+}
+
+.accordion-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.accordion-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  color: var(--color-heading);
+}
+
+.accordion-summary {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.accordion-chevron {
+  flex-shrink: 0;
+  color: var(--color-text-faint);
+  transition: transform var(--transition-base);
+}
+
+.is-open .accordion-chevron {
+  transform: rotate(180deg);
+  color: var(--color-accent);
+}
+
+.accordion-panel-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-base);
+}
+
+.is-open .accordion-panel-wrap {
+  grid-template-rows: 1fr;
+}
+
+.accordion-panel {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-panel-wrap,
+  .accordion-chevron {
+    transition: none;
+  }
+}

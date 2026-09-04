@@ -131,7 +131,7 @@
   margin: var(--space-8) 0;
 }
 
-.def-grid {
+.flip-card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-3);
@@ -139,32 +139,9 @@
 }
 
 @media (max-width: 700px) {
-  .def-grid {
+  .flip-card-grid {
     grid-template-columns: 1fr;
   }
-}
-
-.def-card {
-  padding: var(--space-4) var(--space-5);
-  background: var(--color-paper);
-  border: 1px solid var(--color-border);
-  border-top: 3px solid var(--color-accent);
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-}
-
-.def-card-label {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: var(--text-base);
-  color: var(--color-accent-dark);
-  margin-bottom: var(--space-2);
-}
-
-.def-card p {
-  margin: 0;
-  font-size: var(--text-base);
-  line-height: 1.55;
-  color: var(--color-text-muted);
 }
 
 .compare-grid {

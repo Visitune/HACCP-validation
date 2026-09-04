@@ -3,6 +3,38 @@ import Quote from "../components/Quote";
 import Aside from "../components/Aside";
 import Toc from "../components/Toc";
 import Tldr from "../components/Tldr";
+import FlipCard from "../components/FlipCard";
+import { ClipboardIcon } from "../components/ApproachIcons";
+
+const ICON_PROPS = {
+  width: 20,
+  height: 20,
+  viewBox: "0 0 24 24",
+  fill: "none" as const,
+  stroke: "currentColor",
+  strokeWidth: 1.6,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+};
+
+function CheckCircleIcon() {
+  return (
+    <svg {...ICON_PROPS}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8.5 12.3l2.4 2.4 4.6-5.4" />
+    </svg>
+  );
+}
+
+function EyeIcon() {
+  return (
+    <svg {...ICON_PROPS}>
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
 
 const tocItems = [
   { id: "ce-que-demande-le-codex", label: "1. Ce que le Codex demande réellement depuis 2008" },
@@ -125,31 +157,21 @@ export default function Partie1Pourquoi() {
         valider n'est ni surveiller, ni vérifier. Le texte prend soin de
         séparer les trois concepts (Section IV) :
       </p>
-      <div className="def-grid">
-        <div className="def-card">
-          <div className="def-card-label">Validation</div>
-          <p>
-            La démonstration, <strong>en amont</strong>, que la mesure{" "}
-            <em>peut</em> atteindre le résultat voulu si elle est
-            correctement mise en œuvre.
-          </p>
-        </div>
-        <div className="def-card">
-          <div className="def-card-label">Surveillance</div>
-          <p>
-            La collecte <strong>continue</strong> de données pendant que la
-            mesure fonctionne, pour confirmer qu'elle reste dans ses
-            limites.
-          </p>
-        </div>
-        <div className="def-card">
-          <div className="def-card-label">Vérification</div>
-          <p>
-            Les contrôles <strong>a posteriori</strong> (audits, relevés
-            d'enregistrements, analyses ponctuelles) qui confirment que la
-            mesure a été appliquée comme prévu.
-          </p>
-        </div>
+      <div className="flip-card-grid">
+        <FlipCard icon={CheckCircleIcon} term="Validation">
+          La démonstration, <strong>en amont</strong>, que la mesure{" "}
+          <em>peut</em> atteindre le résultat voulu si elle est correctement
+          mise en œuvre.
+        </FlipCard>
+        <FlipCard icon={EyeIcon} term="Surveillance">
+          La collecte <strong>continue</strong> de données pendant que la
+          mesure fonctionne, pour confirmer qu'elle reste dans ses limites.
+        </FlipCard>
+        <FlipCard icon={ClipboardIcon} term="Vérification">
+          Les contrôles <strong>a posteriori</strong> (audits, relevés
+          d'enregistrements, analyses ponctuelles) qui confirment que la
+          mesure a été appliquée comme prévu.
+        </FlipCard>
       </div>
       <p>
         Un plan de surveillance bien tenu et des vérifications régulières ne

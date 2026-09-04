@@ -1,5 +1,5 @@
 import { useState, type ComponentType } from "react";
-import { ChartIcon, ClipboardIcon, DocumentIcon, FlaskIcon } from "./DangerPickerIcons";
+import { ChartIcon, ClipboardIcon, DocumentIcon, FlaskIcon } from "./ApproachIcons";
 import "./DangerPicker.css";
 
 interface Preset {

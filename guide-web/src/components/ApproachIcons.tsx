@@ -10,6 +10,7 @@ const ICON_PROPS = {
   "aria-hidden": true,
 };
 
+/** Approche 1 — Documentation / antécédents */
 export function DocumentIcon() {
   return (
     <svg {...ICON_PROPS}>
@@ -20,6 +21,7 @@ export function DocumentIcon() {
   );
 }
 
+/** Approche 2 — Essais expérimentaux */
 export function FlaskIcon() {
   return (
     <svg {...ICON_PROPS}>
@@ -30,6 +32,7 @@ export function FlaskIcon() {
   );
 }
 
+/** Approche 3 — Collecte de données */
 export function ClipboardIcon() {
   return (
     <svg {...ICON_PROPS}>
@@ -40,12 +43,23 @@ export function ClipboardIcon() {
   );
 }
 
+/** Approche 4 — Modélisation mathématique */
 export function ChartIcon() {
   return (
     <svg {...ICON_PROPS}>
       <path d="M4.5 20V4" />
       <path d="M4.5 20h16" />
       <path d="M7.5 16l3.5-5 3 3 4.5-6.5" />
+    </svg>
+  );
+}
+
+/** Approche 5 — Études (surveys) */
+export function SurveyIcon() {
+  return (
+    <svg {...ICON_PROPS}>
+      <path d="M4 5.5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4.2 3.4a.5.5 0 0 1-.8-.4V16.5H4a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1Z" />
+      <path d="M8 10.5h8M8 13.5h5" />
     </svg>
   );
 }
