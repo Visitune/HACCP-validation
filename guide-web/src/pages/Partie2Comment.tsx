@@ -4,6 +4,7 @@ import Toc from "../components/Toc";
 import Tldr from "../components/Tldr";
 import ApproachMatrix from "../components/ApproachMatrix";
 import ScenarioCard from "../components/ScenarioCard";
+import CaseViewer from "../components/CaseViewer";
 import Accordion from "../components/Accordion";
 import {
   ChartIcon,
@@ -518,6 +519,7 @@ export default function Partie2Comment() {
         avant même la modélisation.
       </p>
 
+      <CaseViewer />
       <p className="note-box">
         Sections/Annexes citées : VI (les 5 approches), Annexe I Exemples 1 à
         6, V (critères de priorisation). Voir la page{" "}
